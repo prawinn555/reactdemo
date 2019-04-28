@@ -5,7 +5,7 @@ import "./SearchInput.css";
 
 class SearchInput extends PureComponent {
   handleChange = event => {
-    this.props.textChange(event);
+    this.props.searchNameChange(event);
   };
 
   render() {
@@ -19,6 +19,6 @@ class SearchInput extends PureComponent {
   }
 }
 SearchInput.propTypes = {
-  textChange: PropTypes.func
+  searchNameChange: PropTypes.func
 };
 export default SearchInput;

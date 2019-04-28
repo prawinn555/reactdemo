@@ -156,7 +156,7 @@
     "title": "Sunglasses",
     "symbol": "😎",
     "keywords":
-      "smiling face with sunglasses silly smiley emojione glasses boys night boys night"
+      "smiling face with sunglasses silly smiley dataone glasses boys night boys night"
   },
   {
     "title": "Hugging",
@@ -553,7 +553,7 @@
     "title": "Point Up",
     "symbol": "☝",
     "keywords":
-      "white up pointing index body hands emojione diversity diversity"
+      "white up pointing index body hands dataone diversity diversity"
   },
   {
     "title": "Point Up 2",
@@ -8200,27 +8200,27 @@
   {
     "title": "Tone1",
     "symbol": "🏻",
-    "keywords": "emoji modifier Fitzpatrick type-1-2"
+    "keywords": "data modifier Fitzpatrick type-1-2"
   },
   {
     "title": "Tone2",
     "symbol": "🏼",
-    "keywords": "emoji modifier Fitzpatrick type-3"
+    "keywords": "data modifier Fitzpatrick type-3"
   },
   {
     "title": "Tone3",
     "symbol": "🏽",
-    "keywords": "emoji modifier Fitzpatrick type-4"
+    "keywords": "data modifier Fitzpatrick type-4"
   },
   {
     "title": "Tone4",
     "symbol": "🏾",
-    "keywords": "emoji modifier Fitzpatrick type-5"
+    "keywords": "data modifier Fitzpatrick type-5"
   },
   {
     "title": "Tone5",
     "symbol": "🏿",
-    "keywords": "emoji modifier Fitzpatrick type-6"
+    "keywords": "data modifier Fitzpatrick type-6"
   },
   {
     "title": "Prince Tone1",

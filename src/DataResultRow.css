@@ -1,4 +1,4 @@
-.component-emoji-result-row {
+.component-data-result-row {
   border-bottom: 1px solid #ccc;
   padding: 10px;
   height: 32px;
@@ -7,22 +7,22 @@
   cursor: pointer;
 }
 
-.component-emoji-result-row:hover {
+.component-data-result-row:hover {
   background-color: #eee;
 }
 
-.component-emoji-result-row img {
+.component-data-result-row img {
   width: 32px;
   height: 32px;
   padding-right: 10px;
 }
 
-.component-emoji-result-row .title {
+.component-data-result-row .title {
   position: relative;
   top: -8px;
 }
 
-.component-emoji-result-row .info {
+.component-data-result-row .info {
   float: right;
   position: relative;
   top: 8px;
@@ -31,6 +31,6 @@
   display: none;
 }
 
-.component-emoji-result-row:hover .info {
+.component-data-result-row:hover .info {
   display: inline-block;
 }
