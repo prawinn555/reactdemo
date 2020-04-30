@@ -6,14 +6,14 @@ class Header extends PureComponent {
     return (
       <header className="component-header">
         <img
-          src="//cdn.jsdelivr.net/dataone/assets/png/1f638.png"
+          src="//cdn.jsdelivr.net/emojione/assets/png/1f638.png"
           width="32"
           height="32"
           alt=""
         />
-        Data Search
+        Welcome to our demo
         <img
-          src="//cdn.jsdelivr.net/dataone/assets/png/1f63a.png"
+          src="//cdn.jsdelivr.net/emojione/assets/png/1f63a.png"
           width="32"
           height="32"
           alt=""

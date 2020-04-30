@@ -7,15 +7,15 @@ Here, you will find example code to create a web app, using the following framew
 * React Javascript library
 
 
-Our Web app will call a simple REST service to manage products
+Our Web app will call a simple REST service to manage data items
 
-* create a simple object ( product)
-* list products
-* update a product
-* delete a product
+* create a simple object ( data item)
+* list data items
+* update a data item
+* delete a data item
 
 The REST service is another project.  The service is deployed here 
- [Live service](https://nodejsdemo.glitch.me/).
+ [Live service](https://generic-db.glitch.me/).
  
 
 
@@ -57,7 +57,7 @@ TODO
 * Run the application
 
 ```
-node start
+npm start
  
 ```
 
