@@ -5,6 +5,7 @@ import CreateSchema from './demo/CreateSchema/CreateSchema';
 import FindForms    from './demo/FindForms/FindForms';
 import ListItems    from './demo/ListItems/ListItems';
 
+
 //import dataLoaderAndFilter from "./dataLoaderAndFilter";
 
 class App extends PureComponent {
@@ -23,7 +24,6 @@ class App extends PureComponent {
   render() {
     return (
       <div>
-
         <SimpleMenu >
           {this.menuSelected}
         </SimpleMenu>

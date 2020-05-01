@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import ConfirmModal from '../Modal/ConfirmModal';
+import DetailItem   from './DetailItem.js';
+import icons from 'glyphicons';
 import { findItems, deleteItemById } from '../../service/data-service';
 
 class ListItems extends PureComponent {
@@ -14,7 +16,7 @@ class ListItems extends PureComponent {
 	this.refresh('');
   }
 
-  refresh = (msg) =>{
+  refresh = (msg) => {
 	findItems(this.props.filter).then(
 		(data) => {
 			this.setState( {
@@ -61,6 +63,15 @@ class ListItems extends PureComponent {
 		  itemToDelete : null });
   };
 
+
+  detailItem = (itemToShow) => {
+	  console.log('itemToShow', itemToShow);
+	  this.setState({
+		  itemToShow });
+  };
+
+  // find icons in \node_modules\glyphicons\glyphicons.js
+
   render() {
     return (
       <div className="px-2" >
@@ -82,6 +93,11 @@ class ListItems extends PureComponent {
 			</p>
 		</ConfirmModal>
   		
+		<ConfirmModal show={Boolean(this.state.itemToShow)} 
+			 title={'Item ID ' + this.state.itemToShow}
+			 handlecancel={() => { this.setState({itemToShow : null}); }} >
+			<DetailItem item={this.state.itemToShow} />
+		</ConfirmModal>
 
 		{ this.state.data && 
 		<Table striped bordered hover size="sm">
@@ -94,6 +110,7 @@ class ListItems extends PureComponent {
   				}
 				<th>description</th>
 				<th></th>
+				<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -105,11 +122,14 @@ class ListItems extends PureComponent {
 					}
 					<td>{item.description}</td>
 					<td >
-						<svg 	onClick={() => this.askConfirmDelete(item.id)}
-								className="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-						<path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
-						<path fillRule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clipRule="evenodd"/>
-						</svg>
+						<a href="#" onClick={() => this.detailItem(item.id)} >
+							{icons.magnifyingGlass}
+						</a>
+					</td>
+					<td >
+						<a href="#" 	onClick={() => this.askConfirmDelete(item.id)} >
+							{icons.wastebasket}
+						</a>
 					</td>
 				</tr>
 			)}

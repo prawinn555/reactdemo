@@ -1,7 +1,7 @@
 
 var baseUrl = 
-  // 'http://localhost:1234/'; 
-   'https://generic-db.glitch.me/';
+   'http://localhost:1234/'; 
+  // 'https://generic-db.glitch.me/';
 
 /**
  * ex searchText='type=FORM'
@@ -9,7 +9,7 @@ var baseUrl =
 export async function findItems(searchText) {
   console.log(`filter with ${searchText}`);
 
-  let path = 'items?' +searchText;
+  let path = 'items' + (searchText? '?'+searchText : '');
   let url = baseUrl + path;
   let res = await fetch(url);
 

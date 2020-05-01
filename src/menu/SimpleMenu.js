@@ -14,7 +14,7 @@ class SimpleMenu extends PureComponent {
     };
 
     const callback = this.props.children;
-    callback("FindForms");
+    callback("ListAllData");
   };
 
 
