@@ -2,16 +2,17 @@
   "name": "reactdemo",
   "version": "1.0.0",
   "description": "Demo for react framework",
-  "homepage": "https://github.com/prawinn555/reactdemo",
   "devDependencies": {
     "gh-pages": "^1.1.0",
     "prettier": "^1.13.0",
     "react-scripts": "^3.4.1"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "react": "^16.8.0",
+    "react-bootstrap": "^1.0.1",
     "react-dom": "^16.8.0",
-    "@material-ui/core": "4.9.12"
+    "react-json-view": "^1.19.1"
   },
   "scripts": {
     "start": "react-scripts start",

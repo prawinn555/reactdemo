@@ -1,70 +1,71 @@
 import React, { PureComponent } from "react";
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Dropdown from 'react-bootstrap/Dropdown';
 
-const options = [
-  'Show some love to Material-UI',
-  'Show all notification content',
-  'Hide sensitive notification content',
-  'Hide all notification content',
-  ];
+
 
 class SimpleMenu extends PureComponent {
+
 
 
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl : null,
-      selectedIndex : 0
+       menuItemText : ""
     };
+
+    const callback = this.props.children;
+    callback("FindForms");
   };
+
+
+  chooseMenu = (event) => {
+    console.log('chooseMenu', 
+        event.currentTarget.getAttribute('menuitem'),
+        event.currentTarget.innerHTML,
+       );
+    const callback = this.props.children;
+    callback(event.currentTarget.getAttribute('menuitem'));
+    this.setState({
+      menuItemText : event.currentTarget.innerHTML
+    });
+  };
+
 
   
-  handleClick = (event) => {
-    console.log('click', event.currentTarget);
-    this.setState( { anchorEl : event.currentTarget} );
-  };
-
-
-  handleMenuItemClick = (event, index) => {
-    console.log('handleSelected', event.currentTarget);
-    this.setState( { anchorEl : null, selectedIndex : index } );
-  };
 
   render() {
-    return (<div>
+    return (<div className="container">
 
+      <div className="row">
+        <img
+          src="//cdn.jsdelivr.net/emojione/assets/png/1f638.png"
+          width="32"
+          height="32"
+          alt=""
+        />
+        Welcome !!
+        <img
+          src="//cdn.jsdelivr.net/emojione/assets/png/1f63a.png"
+          width="32"
+          height="32"
+          alt=""
+        />
+        
+        <Dropdown className="px-2">
+          <Dropdown.Toggle variant="primary" id="dropdown-basic">
+            Menu
+          </Dropdown.Toggle>
 
-      <Button 
-        aria-controls="simple-menu" 
-        aria-haspopup="true" 
-        onClick={this.handleClick}
-        color="primary" >
-         Menu
-      </Button>
+          <Dropdown.Menu>
+            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="FormatJson" >Simple example : How to format Json</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="CreateSchema" >Create a JSON form</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="FindForms" >Find all forms in database</Dropdown.Item>
+            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="ListAllData" >Everything in database</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
 
-      
-       {  options[this.state.selectedIndex] }
-
-      <Menu
-        id="simple-menu"
-        anchorEl={this.state.anchorEl}
-        open={Boolean(this.state.anchorEl)}
-        keepMounted
-      >
-        {options.map((option, index) => (
-          <MenuItem
-            key={option}
-            disabled={index === this.state.selectedIndex}
-            selected={index === this.state.selectedIndex}
-            onClick={(event) => this.handleMenuItemClick(event, index)}
-          >
-            {option}
-          </MenuItem>
-        ))}
-      </Menu>
+         <header>{this.state.menuItemText}</header>
+      </div>
     </div>);
   }
 }

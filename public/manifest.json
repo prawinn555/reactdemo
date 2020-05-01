@@ -1,6 +1,6 @@
 {
-  "short_name": "Data Search",
-  "name": "Data Search Example App",
+  "short_name": "React demo",
+  "name": "React demo",
   "icons": [
     {
       "src": "favicon.ico",
