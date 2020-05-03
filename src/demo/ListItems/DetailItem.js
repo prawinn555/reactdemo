@@ -1,7 +1,4 @@
 import React, { PureComponent } from "react";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Alert from 'react-bootstrap/Alert';
 import ReactJson from 'react-json-view';
 import { findItemById } from '../../service/data-service';

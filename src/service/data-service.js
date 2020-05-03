@@ -1,7 +1,7 @@
 
 var baseUrl = 
-   'http://localhost:1234/'; 
-  // 'https://generic-db.glitch.me/';
+  // 'http://localhost:1234/'; 
+   'https://generic-db.glitch.me/';
 
 /**
  * ex searchText='type=FORM'
@@ -71,5 +71,22 @@ export async function saveItem(item) {
 };
 
 
-
+export function formatJson(content) {
+	  let obj;
+	  if(!content) {
+		  return null;
+	  }
+	  try {
+		  obj = JSON.parse(content);
+	  } catch(err) {
+		  console.log('json invalide', err);
+		  obj = {
+			  jsonInvalide : (''+err)
+		  };
+	  }
+	  console.log('formatJson', obj);
+	  return (typeof obj === 'object')? obj : {
+		  nonJsonData : ''+obj
+	  };
+  };
 

@@ -1,11 +1,19 @@
 import React, { PureComponent } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import icons from 'glyphicons';
 
 
 class SimpleMenu extends PureComponent {
 
+  menuListe = [
+            ["FormatJson" , "Simple example : How to format Json"],
+            ["DynamicForm" ,"Simple example : Dynamic form"],
 
+            ["EditRawJson" ,"Create/Edit a JSON form"],
+            ["EditCustomForm" ,"Create/Edit a custom form"],
+            ["FindForms" ,"Show all forms in database"],
+            ["ListAllData" ,"Show everything in database"],
+  ];
 
   constructor(props) {
     super(props);
@@ -13,54 +21,36 @@ class SimpleMenu extends PureComponent {
        menuItemText : ""
     };
 
-    const callback = this.props.children;
-    callback("ListAllData");
+    let menuKey =  window.location.pathname;
+    console.log('window.location', window.location);
+    
+    let menu = this.menuListe.find(element => '/'+element[0] === menuKey );
+    if(menu) {
+      this.state.menuItemText = menu[1];
+    }
   };
 
 
-  chooseMenu = (event) => {
-    console.log('chooseMenu', 
-        event.currentTarget.getAttribute('menuitem'),
-        event.currentTarget.innerHTML,
-       );
-    const callback = this.props.children;
-    callback(event.currentTarget.getAttribute('menuitem'));
-    this.setState({
-      menuItemText : event.currentTarget.innerHTML
-    });
-  };
-
-
-  
 
   render() {
     return (<div className="container">
 
       <div className="row">
-        <img
-          src="//cdn.jsdelivr.net/emojione/assets/png/1f638.png"
-          width="32"
-          height="32"
-          alt=""
-        />
-        Welcome !!
-        <img
-          src="//cdn.jsdelivr.net/emojione/assets/png/1f63a.png"
-          width="32"
-          height="32"
-          alt=""
-        />
         
+        {icons.rabbitFace}
+        Welcome !!
+        {icons.rabbit}
+
         <Dropdown className="px-2">
           <Dropdown.Toggle variant="primary" id="dropdown-basic">
             Menu
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="FormatJson" >Simple example : How to format Json</Dropdown.Item>
-            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="CreateSchema" >Create a JSON form</Dropdown.Item>
-            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="FindForms" >Find all forms in database</Dropdown.Item>
-            <Dropdown.Item href="#" onClick={this.chooseMenu} menuitem="ListAllData" >Everything in database</Dropdown.Item>
+            { this.menuListe.map ( (v,index) => 
+              <Dropdown.Item href="#" onClick={ () => window.location.href='/'+v[0]} 
+                   key={v[0]}>{v[1]}</Dropdown.Item>
+            )}
           </Dropdown.Menu>
         </Dropdown>
 

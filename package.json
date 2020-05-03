@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "description": "Demo for react framework",
   "devDependencies": {
-    "gh-pages": "^1.1.0",
     "prettier": "^1.13.0",
     "react-scripts": "^3.4.1"
   },
   "dependencies": {
+    "@rjsf/core": "^2.0.0",
     "bootstrap": "^4.4.1",
     "glyphicons": "^0.2.0",
+    "glyphicons-only-bootstrap": "^1.0.1",
     "react": "^16.8.0",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.8.0",
-    "react-json-view": "^1.19.1"
+    "react-json-view": "^1.19.1",
+    "react-router-dom": "^5.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

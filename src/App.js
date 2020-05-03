@@ -1,44 +1,62 @@
-import React, { PureComponent } from "react";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
 import SimpleMenu   from './menu/SimpleMenu';
 import FormatJson   from './demo/FormatJson/FormatJson';
-import CreateSchema from './demo/CreateSchema/CreateSchema';
+import EditRawJson     from './demo/EditRawJson/EditRawJson';
 import FindForms    from './demo/FindForms/FindForms';
 import ListItems    from './demo/ListItems/ListItems';
-
+import DynamicForm     from './demo/DynamicForm/DynamicForm';
+import EditCustomForm  from './demo/DynamicForm/EditCustomForm';
 
 //import dataLoaderAndFilter from "./dataLoaderAndFilter";
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      menuItem : ""
-    };
-  }
 
-  menuSelected = (menuItem) => {
-    console.log('menuSelected', menuItem);
-    this.setState({menuItem});
-  };
+export default function App(props) {
 
-  render() {
+
     return (
       <div>
-        <SimpleMenu >
-          {this.menuSelected}
-        </SimpleMenu>
-        <hr/>
 
-        {'FormatJson'===this.state.menuItem && <FormatJson/> }
-        {'CreateSchema'===this.state.menuItem && <CreateSchema/> }
-        {'FindForms'===this.state.menuItem && <FindForms/> }
-        {'ListAllData'===this.state.menuItem &&
-           <ListItems />
-        }
+      <Router>
+
+        <SimpleMenu selectedMenu={''} >
+        </SimpleMenu>
+
+        <hr/>
         
+        <Switch>
+          <Route path="/FormatJson">
+            <FormatJson />
+          </Route>
+          <Route path="/EditRawJson">
+            <EditRawJson objectType="FORM" />
+          </Route>
+          <Route path="/FindForms">
+            <FindForms />
+          </Route>
+          <Route path="/ListAllData">
+            <ListItems />
+          </Route>
+          <Route path="/DynamicForm">
+            <DynamicForm />
+          </Route>
+          <Route path="/EditCustomForm">
+            <DynamicForm />
+          </Route>
+          <Route path="/">
+            <h1>Please select a menu</h1>
+          </Route>
+        </Switch>
+      </Router>
 
       </div>
+      
     );
-  }
+  
 }
-export default App;
+

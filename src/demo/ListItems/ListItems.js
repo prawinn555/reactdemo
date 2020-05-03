@@ -1,17 +1,19 @@
 import React, { PureComponent } from "react";
 import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
-import Modal from 'react-bootstrap/Modal';
 import ConfirmModal from '../Modal/ConfirmModal';
 import DetailItem   from './DetailItem.js';
 import icons from 'glyphicons';
 import { findItems, deleteItemById } from '../../service/data-service';
+import EditAsRawJson from '../EditRawJson/EditRawJson';
+import EditCustomForm from '../DynamicForm/EditCustomForm';
 
 class ListItems extends PureComponent {
 
   constructor(props) {
     super(props);
     this.state = {
+		success : 'Please wait...'
 	};
 	this.refresh('');
   }
@@ -19,6 +21,7 @@ class ListItems extends PureComponent {
   refresh = (msg) => {
 	findItems(this.props.filter).then(
 		(data) => {
+			data = data.sort( (a,b) => a.id.localeCompare(b.id));
 			this.setState( {
 				data : data,
 				success : msg + data.length + ' element(s) found.',
@@ -70,6 +73,20 @@ class ListItems extends PureComponent {
 		  itemToShow });
   };
 
+
+  editCustomForm = (param) => {
+	  this.setState({
+		  customFormParam : param });
+  };
+
+  editRawJson = (itemToEditAsRawJson) => {
+	  this.setState({
+		  itemToEditAsRawJson });
+  };
+
+
+  needRefresh = false;
+
   // find icons in \node_modules\glyphicons\glyphicons.js
 
   render() {
@@ -87,17 +104,40 @@ class ListItems extends PureComponent {
 		}
 
 		<ConfirmModal show={Boolean(this.state.itemToDelete)} 
-			handleconfirm={this.confirmDelete} handlecancel={this.cancelDelete} >
+			handleConfirm={this.confirmDelete} handleClose={this.cancelDelete} >
 			<p>
 				Do you want to delete the item ID {this.setState.itemToDelete} ?
 			</p>
 		</ConfirmModal>
   		
-		<ConfirmModal show={Boolean(this.state.itemToShow)} 
-			 title={'Item ID ' + this.state.itemToShow}
-			 handlecancel={() => { this.setState({itemToShow : null}); }} >
-			<DetailItem item={this.state.itemToShow} />
-		</ConfirmModal>
+		{this.state.itemToShow && 
+			<ConfirmModal show={Boolean(this.state.itemToShow)} 
+				title={`View Item ID ${this.state.itemToShow}`}
+				handleClose={() => { this.setState({itemToShow : null}); }} >
+				<DetailItem item={this.state.itemToShow} />
+			</ConfirmModal>
+		}
+
+		{this.state.itemToEditAsRawJson &&
+			<ConfirmModal show={Boolean(this.state.itemToEditAsRawJson)} 
+				size="lg"
+				title={`Edit item ID ${this.state.itemToEditAsRawJson} (as raw json)`}
+				handleClose={() => { 
+					if(this.needRefresh) { this.refresh(); this.needRefresh=false; }
+					this.setState({itemToEditAsRawJson : null}); }} >
+				<EditAsRawJson itemId={this.state.itemToEditAsRawJson} callbackRefresh={()=>{this.needRefresh=true;}} />
+			</ConfirmModal>
+		}
+
+		{this.state.customFormParam && 
+			<ConfirmModal show={Boolean(this.state.customFormParam)} 
+				size="xl"
+				title={this.state.customFormParam.id? `Edit item ID ${this.state.customFormParam.id}` 
+							:  `Create a new object ${this.state.customFormParam.form}`  }
+				handleClose={() => { this.setState({customFormParam : null}); }} >
+				<EditCustomForm param={this.state.customFormParam} />
+			</ConfirmModal>
+  		}
 
 		{ this.state.data && 
 		<Table striped bordered hover size="sm">
@@ -109,8 +149,8 @@ class ListItems extends PureComponent {
 					<th>type</th>
   				}
 				<th>description</th>
-				<th></th>
-				<th></th>
+				<th>Custom form</th>
+				<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -121,15 +161,28 @@ class ListItems extends PureComponent {
 						<th>{item.type}</th>
 					}
 					<td>{item.description}</td>
-					<td >
-						<a href="#" onClick={() => this.detailItem(item.id)} >
-							{icons.magnifyingGlass}
-						</a>
+					<td>
+						{ (item.type==='FORM') &&
+							<button onClick={() => this.editCustomForm({form : item.id})} title="new instance"   >
+								{icons.plus}
+							</button>
+						}
+						{ (item.type!=='FORM') &&
+							<button onClick={() => this.editCustomForm({id : item.id})} title="Edit json form" >
+								✨
+							</button>
+						}
 					</td>
 					<td >
-						<a href="#" 	onClick={() => this.askConfirmDelete(item.id)} >
+						<button onClick={() => this.editRawJson(item.id) } title="Edit raw json" >
+							{icons.pencil}
+						</button>
+						<button onClick={() => this.detailItem(item.id)} >
+							{icons.magnifyingGlass}
+						</button>
+						<button onClick={() => this.askConfirmDelete(item.id)} >
 							{icons.wastebasket}
-						</a>
+						</button>
 					</td>
 				</tr>
 			)}
