@@ -87,6 +87,11 @@ class ListItems extends PureComponent {
 
   needRefresh = false;
 
+  notifyRefresh = () => { this.needRefresh=true; };
+  conditionalRefresh = () => { 
+	  if(this.needRefresh) { this.refresh(); this.needRefresh=false; } 
+  };
+
   // find icons in \node_modules\glyphicons\glyphicons.js
 
   render() {
@@ -123,9 +128,9 @@ class ListItems extends PureComponent {
 				size="lg"
 				title={`Edit item ID ${this.state.itemToEditAsRawJson} (as raw json)`}
 				handleClose={() => { 
-					if(this.needRefresh) { this.refresh(); this.needRefresh=false; }
+					this.conditionalRefresh();
 					this.setState({itemToEditAsRawJson : null}); }} >
-				<EditAsRawJson itemId={this.state.itemToEditAsRawJson} callbackRefresh={()=>{this.needRefresh=true;}} />
+				<EditAsRawJson itemId={this.state.itemToEditAsRawJson} callbackRefresh={this.notifyRefresh} />
 			</ConfirmModal>
 		}
 
@@ -134,8 +139,10 @@ class ListItems extends PureComponent {
 				size="xl"
 				title={this.state.customFormParam.id? `Edit item ID ${this.state.customFormParam.id}` 
 							:  `Create a new object ${this.state.customFormParam.form}`  }
-				handleClose={() => { this.setState({customFormParam : null}); }} >
-				<EditCustomForm param={this.state.customFormParam} />
+				handleClose={() => { 
+					this.conditionalRefresh(); 
+					this.setState({customFormParam : null}); }} >
+				<EditCustomForm param={this.state.customFormParam} callbackRefresh={this.notifyRefresh} />
 			</ConfirmModal>
   		}
 
@@ -163,7 +170,7 @@ class ListItems extends PureComponent {
 					<td>{item.description}</td>
 					<td>
 						{ (item.type==='FORM') &&
-							<button onClick={() => this.editCustomForm({form : item.id})} title="new instance"   >
+							<button onClick={() => this.editCustomForm({form : item.id, suggestedId : this.state.data.length+1})} title="new instance"   >
 								{icons.plus}
 							</button>
 						}

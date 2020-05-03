@@ -39,7 +39,7 @@ class EditRawJson extends PureComponent {
 	} else {
 		// if ID not provided,
 		// we show emptyForm.
-		let content = this.props.objectType=='FORM'? JSON.stringify(exampleForm, null, ' ') : '';
+		let content = this.props.objectType==='FORM'? JSON.stringify(exampleForm, null, ' ') : '';
 		this.state = {
 			formattedObject : formatJson(content),
 			id : '',
