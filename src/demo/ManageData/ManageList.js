@@ -2,21 +2,33 @@ import React, { PureComponent } from "react";
 import Table from 'react-bootstrap/Table';
 import Alert from 'react-bootstrap/Alert';
 import ConfirmModal from '../Modal/ConfirmModal';
-import DetailItem   from './DetailItem.js';
+import ViewItem   from './ViewItem.js';
 import icons from 'glyphicons';
 import { findItems, deleteItemById } from '../../service/data-service';
 import EditAsRawJson from '../EditRawJson/EditRawJson';
 import EditCustomForm from '../DynamicForm/EditCustomForm';
 
-class ListItems extends PureComponent {
+class ManageList extends PureComponent {
 
   constructor(props) {
     super(props);
     this.state = {
 		success : 'Please wait...'
 	};
+
+  }
+
+  componentDidMount() {
 	this.refresh('');
   }
+
+  componentDidUpdate(prevProps) {
+	if(prevProps.filter!== this.props.filter) {
+	  this.refresh('');
+	}
+  }
+
+
 
   refresh = (msg) => {
 	findItems(this.props.filter).then(
@@ -27,6 +39,9 @@ class ListItems extends PureComponent {
 				success : msg + data.length + ' element(s) found.',
 				error : ''
 			});
+			if(this.props.notifyResultList) {
+				this.props.notifyResultList(data);
+			}
 		}, 
 		(err) => {
 			this.setState( {
@@ -67,7 +82,7 @@ class ListItems extends PureComponent {
   };
 
 
-  detailItem = (itemToShow) => {
+  ViewItem = (itemToShow) => {
 	  console.log('itemToShow', itemToShow);
 	  this.setState({
 		  itemToShow });
@@ -95,8 +110,9 @@ class ListItems extends PureComponent {
   // find icons in \node_modules\glyphicons\glyphicons.js
 
   render() {
+	console.log('ManageList render ', this.props.filter);
     return (
-      <div className="px-2" >
+	<div className="py-2">
 		{ this.state.success &&
 			<Alert variant='success' >
 				{this.state.success}
@@ -119,7 +135,7 @@ class ListItems extends PureComponent {
 			<ConfirmModal show={Boolean(this.state.itemToShow)} 
 				title={`View Item ID ${this.state.itemToShow}`}
 				handleClose={() => { this.setState({itemToShow : null}); }} >
-				<DetailItem item={this.state.itemToShow} />
+				<ViewItem item={this.state.itemToShow} />
 			</ConfirmModal>
 		}
 
@@ -152,31 +168,39 @@ class ListItems extends PureComponent {
 				<tr>
 				<th>id</th>
 				
-				{ !this.props.filter &&
+				{ this.props.showType &&
 					<th>type</th>
   				}
 				<th>description</th>
 				<th>Custom form</th>
-				<th>Actions</th>
+				<th>Simple actions</th>
 				</tr>
 			</thead>
 			<tbody>
 			{this.state.data.map((item) =>
 				<tr key={item.id} >
 					<td>{item.id}</td>
-					{ !this.props.filter &&
+					{ this.props.showType &&
 						<th>{item.type}</th>
 					}
 					<td>{item.description}</td>
 					<td>
 						{ (item.type==='FORM') &&
-							<button onClick={() => this.editCustomForm({form : item.id, suggestedId : this.state.data.length+1})} title="new instance"   >
+							<button onClick={() => this.editCustomForm({
+										form : item.id, 
+										suggestedId : `${item.id}_${this.state.data.length+1}`})} 
+								title={`New instance from the form ${item.id}`}   >
 								{icons.plus}
 							</button>
 						}
+						{ (item.type==='FORM') &&
+							<button onClick={() => this.editCustomForm({id : item.id })} title={`Edit the form definition ${item.id}`}   >
+								{icons.gear}
+							</button>
+						}
 						{ (item.type!=='FORM') &&
-							<button onClick={() => this.editCustomForm({id : item.id})} title="Edit json form" >
-								✨
+							<button onClick={() => this.editCustomForm({id : item.id})} title={`Edit the object ${item.id} with the form ${item.type}`}  >
+								{icons.memo}
 							</button>
 						}
 					</td>
@@ -184,10 +208,10 @@ class ListItems extends PureComponent {
 						<button onClick={() => this.editRawJson(item.id) } title="Edit raw json" >
 							{icons.pencil}
 						</button>
-						<button onClick={() => this.detailItem(item.id)} >
+						<button onClick={() => this.ViewItem(item.id)} title="View raw json"  >
 							{icons.magnifyingGlass}
 						</button>
-						<button onClick={() => this.askConfirmDelete(item.id)} >
+						<button onClick={() => this.askConfirmDelete(item.id)} title="Delete" >
 							{icons.wastebasket}
 						</button>
 					</td>
@@ -200,4 +224,4 @@ class ListItems extends PureComponent {
     );
   }
 };
-export default ListItems;
+export default ManageList;

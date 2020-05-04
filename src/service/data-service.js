@@ -1,7 +1,7 @@
 
 var baseUrl = 
-  // 'http://localhost:1234/'; 
-   'https://generic-db.glitch.me/';
+   'http://localhost:1234/'; 
+  //  'https://generic-db.glitch.me/';
 
 /**
  * ex searchText='type=FORM'

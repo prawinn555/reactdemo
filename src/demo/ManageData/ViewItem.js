@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert';
 import ReactJson from 'react-json-view';
 import { findItemById } from '../../service/data-service';
 
-class DetailItem extends PureComponent {
+class ViewItem extends PureComponent {
   constructor(props) {
 	super(props);
 	// item id : props.item 
@@ -78,4 +78,4 @@ class DetailItem extends PureComponent {
     );
   }
 };
-export default DetailItem;
+export default ViewItem;

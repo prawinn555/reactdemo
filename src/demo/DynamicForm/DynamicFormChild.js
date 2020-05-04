@@ -3,9 +3,6 @@ import CustomForm from "@rjsf/core";
 
 class DynamicFormChild extends PureComponent {
 
-  constructor(props) {
-	super(props);
-  }
 
   render() {
 	return (

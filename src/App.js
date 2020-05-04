@@ -8,10 +8,10 @@ import {
 import SimpleMenu   from './menu/SimpleMenu';
 import FormatJson   from './demo/FormatJson/FormatJson';
 import EditRawJson     from './demo/EditRawJson/EditRawJson';
-import FindForms    from './demo/FindForms/FindForms';
-import ListItems    from './demo/ListItems/ListItems';
-import DynamicForm     from './demo/DynamicForm/DynamicForm';
-import EditCustomForm  from './demo/DynamicForm/EditCustomForm';
+import ManageForms    from './demo/ManageForms/ManageForms';
+import ManageData    from './demo/ManageData/ManageData';
+import JsonFormExample     from './demo/DynamicForm/JsonFormExample';
+
 
 //import dataLoaderAndFilter from "./dataLoaderAndFilter";
 
@@ -36,17 +36,14 @@ export default function App(props) {
           <Route path="/EditRawJson">
             <EditRawJson objectType="FORM" />
           </Route>
-          <Route path="/FindForms">
-            <FindForms />
+          <Route path="/ManageForms">
+            <ManageForms />
           </Route>
-          <Route path="/ListAllData">
-            <ListItems />
+          <Route path="/ManageData">
+            <ManageData  />
           </Route>
-          <Route path="/DynamicForm">
-            <DynamicForm />
-          </Route>
-          <Route path="/EditCustomForm">
-            <DynamicForm />
+          <Route path="/JsonFormExample">
+            <JsonFormExample />
           </Route>
           <Route path="/">
             <h1>Please select a menu</h1>

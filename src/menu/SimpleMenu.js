@@ -6,13 +6,12 @@ import icons from 'glyphicons';
 class SimpleMenu extends PureComponent {
 
   menuListe = [
-            ["FormatJson" , "Simple example : How to format Json"],
-            ["DynamicForm" ,"Simple example : Dynamic form"],
+            ["ManageData" ,"Manage your data"],
+            ["ManageForms"   ,"Manage your forms"],
+            ["EditRawJson" ,"Create a form (raw JSON)"],
 
-            ["EditRawJson" ,"Create/Edit a JSON form"],
-            ["EditCustomForm" ,"Create/Edit a custom form"],
-            ["FindForms" ,"Show all forms in database"],
-            ["ListAllData" ,"Show everything in database"],
+            ["FormatJson" , "Example : How to format Json"],
+            ["JsonFormExample" ,"Example : Dynamic form"],
   ];
 
   constructor(props) {

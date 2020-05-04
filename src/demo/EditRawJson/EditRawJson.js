@@ -137,7 +137,7 @@ class EditRawJson extends PureComponent {
 						<Form.Control 
 							name="description"
 							value={this.state.description}
-							placeholder="describe your form"
+							placeholder="describe your data"
 							onChange={this.handleFormChange}
 							aria-describedby="fieldLabel-description" />
 					</InputGroup>

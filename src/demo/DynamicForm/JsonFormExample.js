@@ -2,7 +2,7 @@ import React from "react";
 import Form from "@rjsf/core";
 import myData from './data.js';
 
-export default function DynamicForm(props) {
+export default function JsonFormExample(props) {
 
 	/*
   const [value, setValue] = React.useState(null);
