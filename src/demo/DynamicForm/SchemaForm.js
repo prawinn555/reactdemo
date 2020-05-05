@@ -19,25 +19,44 @@ const SchemaForm = {
 					"type"
 				], 
 				"properties" : {
-						"fieldName" : {
-							"type": "string",
-							"title" : "Techinical field name",
-							"pattern": "^[A-Za-z0-9_-]{0,30}$"
-						},
-						"type" : {
-							"enum": ["string","integer", "boolean", "date"],
-							"default" : "string",
-							"title" : "Data type"
-						},
-						"title" : {
-							"type": "string",
-							"title" : "Title to show in the form"
-						},
-						"required" : {
-							"type": "boolean",
-							"title" : "Required?"
-						}
-					
+					"fieldName" : {
+						"type": "string",
+						"title" : "Techinical field name",
+						"pattern": "^[A-Za-z0-9_-]{0,30}$"
+					},
+					"type" : {
+						"enum": ["string","integer", "boolean", "date", "enum"],
+						"default" : "string",
+						"title" : "Data type"
+					},
+					"title" : {
+						"type": "string",
+						"title" : "Title to show in the form"
+					},
+					"booleanRequired" : {
+						"type": "boolean",
+						"title" : "Required?"
+					}
+				},
+				dependencies : {
+					"type" : {
+						"oneOf": [
+								{
+									"properties": {
+										"type": {"enum": ["enum"]},
+										"enumValues" : {
+											type: "string",
+											title : "Enum values (comma separated)"
+										}
+									}
+								},
+								{
+									"properties": {
+										"type": {"enum": ["string","integer", "boolean", "date"]}
+									}
+								}
+							]
+					}
 				} 
 			}
 		} 

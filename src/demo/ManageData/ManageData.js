@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import icons from 'glyphicons';
 import ManageList from './ManageList';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { findItems, deleteItemById } from '../../service/data-service';
+import { findItems, getTimeStamp } from '../../service/data-service';
 import ConfirmModal from '../Modal/ConfirmModal';
 import EditCustomForm from '../DynamicForm/EditCustomForm';
 
@@ -50,7 +50,7 @@ class ManageData extends PureComponent {
 	  this.setState({
 		  customFormParam : {
 			  form : this.getSelectedForm().id,
-			  suggestedId : `${this.getSelectedForm().id}_${this.resultList?this.resultList.length+1:1}`
+			  suggestedId : `${this.getSelectedForm().id}_${getTimeStamp()}`
 		  } });
   };
   
@@ -70,10 +70,7 @@ class ManageData extends PureComponent {
 	  this.refreshCount++;
   }
 
-  notifyResultList = (list) => {
-	  // use for generating ID.
-	  this.resultList = list;
-  }
+
 
   render() {
     return (
@@ -110,7 +107,6 @@ class ManageData extends PureComponent {
 			 filter={this.state.selectedIndex? 
 					`type=${this.state.formList[this.state.selectedIndex].id}&refreshCount=${this.refreshCount}` : 
 					`type=FORM&opposite=true&refreshCount=${this.refreshCount}`} 
-			 notifyResultList={this.notifyResultList}
 			 showType="true" />
 
 		

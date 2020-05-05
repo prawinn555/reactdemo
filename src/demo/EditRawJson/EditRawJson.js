@@ -5,7 +5,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Alert from 'react-bootstrap/Alert';
 import ReactJson from 'react-json-view';
 import { findItemById, saveItem, formatJson } from '../../service/data-service';
-import { exampleForm } from './data';
 
 class EditRawJson extends PureComponent {
   constructor(props) {
@@ -39,7 +38,7 @@ class EditRawJson extends PureComponent {
 	} else {
 		// if ID not provided,
 		// we show emptyForm.
-		let content = this.props.objectType==='FORM'? JSON.stringify(exampleForm, null, ' ') : '';
+		let content = '';
 		this.state = {
 			formattedObject : formatJson(content),
 			id : '',
@@ -136,7 +135,7 @@ class EditRawJson extends PureComponent {
 						</InputGroup.Prepend>
 						<Form.Control 
 							name="description"
-							value={this.state.description}
+							value={this.state.description? this.state.description : ''}
 							placeholder="describe your data"
 							onChange={this.handleFormChange}
 							aria-describedby="fieldLabel-description" />

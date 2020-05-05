@@ -4,7 +4,7 @@ import Alert from 'react-bootstrap/Alert';
 import ConfirmModal from '../Modal/ConfirmModal';
 import ViewItem   from './ViewItem.js';
 import icons from 'glyphicons';
-import { findItems, deleteItemById } from '../../service/data-service';
+import { findItems, deleteItemById, getTimeStamp } from '../../service/data-service';
 import EditAsRawJson from '../EditRawJson/EditRawJson';
 import EditCustomForm from '../DynamicForm/EditCustomForm';
 
@@ -13,9 +13,9 @@ class ManageList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-		success : 'Please wait...'
+		alert : 'Please wait...',
+		alertVariant : 'info'
 	};
-
   }
 
   componentDidMount() {
@@ -35,18 +35,15 @@ class ManageList extends PureComponent {
 		(data) => {
 			data = data.sort( (a,b) => a.id.localeCompare(b.id));
 			this.setState( {
-				data : data,
-				success : msg + data.length + ' element(s) found.',
-				error : ''
+				data : data
 			});
+			this.showSuccess(`${msg? msg : ''} ${data.length} element(s) found.`);
 			if(this.props.notifyResultList) {
 				this.props.notifyResultList(data);
 			}
 		}, 
 		(err) => {
-			this.setState( {
-				error : 'Error while loading : ' +err
-			});
+			this.showError('Error while loading : ' +err);
 		}
 	);
   };
@@ -68,9 +65,7 @@ class ManageList extends PureComponent {
 		this.refresh('Deleted '+itemToDelete+". ");
 
 	} catch(err) {
-		this.setState( {
-			error : 'Error while deleting : ' +err
-		});
+		this.showError('Error while deleting : ' +err);
 	}
 	
 
@@ -94,9 +89,10 @@ class ManageList extends PureComponent {
 		  customFormParam : param });
   };
 
-  editRawJson = (itemToEditAsRawJson) => {
+  editRawJson = (item) => {
 	  this.setState({
-		  itemToEditAsRawJson });
+		  itemToEditAsRawJson : item,
+	  });
   };
 
 
@@ -109,20 +105,31 @@ class ManageList extends PureComponent {
 
   // find icons in \node_modules\glyphicons\glyphicons.js
 
+	showError = (err) => {
+			this.setState({ alert: err, alertVariant : 'danger'});
+	};
+	showWarn = (msg) => {
+			this.setState({ alert: msg, alertVariant : 'warning' });
+	};
+	showSuccess = (msg) => {
+			this.setState({ alert: msg, alertVariant : 'success', ready : true});
+	};
+	showInfo = (msg) => {
+			this.setState({  alert: msg, alertVariant : 'info' });
+	};
+
+
+
   render() {
 	console.log('ManageList render ', this.props.filter);
     return (
 	<div className="py-2">
-		{ this.state.success &&
-			<Alert variant='success' >
-				{this.state.success}
-			</Alert>
-		}
-		{ this.state.error &&
-			<Alert variant='danger' >
-				{this.state.error}
-			</Alert>
-		}
+
+			{ this.state.alert &&
+				<Alert variant={this.state.alertVariant} >
+					{this.state.alert}
+				</Alert>
+			}
 
 		<ConfirmModal show={Boolean(this.state.itemToDelete)} 
 			handleConfirm={this.confirmDelete} handleClose={this.cancelDelete} >
@@ -142,11 +149,11 @@ class ManageList extends PureComponent {
 		{this.state.itemToEditAsRawJson &&
 			<ConfirmModal show={Boolean(this.state.itemToEditAsRawJson)} 
 				size="lg"
-				title={`Edit item ID ${this.state.itemToEditAsRawJson} (as raw json)`}
+				title={`Edit ${this.state.itemToEditAsRawJson.type} ID ${this.state.itemToEditAsRawJson.id} (as raw json)`}
 				handleClose={() => { 
 					this.conditionalRefresh();
 					this.setState({itemToEditAsRawJson : null}); }} >
-				<EditAsRawJson itemId={this.state.itemToEditAsRawJson} callbackRefresh={this.notifyRefresh} />
+				<EditAsRawJson itemId={this.state.itemToEditAsRawJson.id} callbackRefresh={this.notifyRefresh} />
 			</ConfirmModal>
 		}
 
@@ -158,7 +165,8 @@ class ManageList extends PureComponent {
 				handleClose={() => { 
 					this.conditionalRefresh(); 
 					this.setState({customFormParam : null}); }} >
-				<EditCustomForm param={this.state.customFormParam} callbackRefresh={this.notifyRefresh} />
+				<EditCustomForm param={this.state.customFormParam} 
+					callbackRefresh={this.state.customFormParam.form? null : this.notifyRefresh} />
 			</ConfirmModal>
   		}
 
@@ -166,12 +174,12 @@ class ManageList extends PureComponent {
 		<Table striped bordered hover size="sm">
 			<thead>
 				<tr>
-				<th>id</th>
+				<th>ID</th>
 				
 				{ this.props.showType &&
-					<th>type</th>
+					<th>Type (Form ID)</th>
   				}
-				<th>description</th>
+				<th>Description</th>
 				<th>Custom form</th>
 				<th>Simple actions</th>
 				</tr>
@@ -188,7 +196,7 @@ class ManageList extends PureComponent {
 						{ (item.type==='FORM') &&
 							<button onClick={() => this.editCustomForm({
 										form : item.id, 
-										suggestedId : `${item.id}_${this.state.data.length+1}`})} 
+										suggestedId : `${item.id}_${getTimeStamp()}`})} 
 								title={`New instance from the form ${item.id}`}   >
 								{icons.plus}
 							</button>
@@ -205,7 +213,7 @@ class ManageList extends PureComponent {
 						}
 					</td>
 					<td >
-						<button onClick={() => this.editRawJson(item.id) } title="Edit raw json" >
+						<button onClick={() => this.editRawJson(item) } title="Edit raw json" >
 							{icons.pencil}
 						</button>
 						<button onClick={() => this.ViewItem(item.id)} title="View raw json"  >

@@ -14,54 +14,69 @@ export default function JsonFormExample(props) {
 
 
 	const schema = {
-		title: "My Data",
+		title: "Netflix program",
 		type: "object",
 		"definitions": {
-			"IceCream": {
+			"Movie": {
 				"type": "object",
 				"title" : "",
 				"properties": {
-					"kind": { enum : ["chocolate", "vanilla", "strawberry"] },
+					"title" : { type : "string", title : "Movie title" },
+					"genre": { enum : ["Horror", "Comedy", "Adventure", "Triller", "Action"], title : "Genre" },
+					"boxofficeRating": { type : "integer", title : "Box Office Rating in $"},
 				}
 			},
-			"Drink": {
+			"Series": {
 				"type": "object",
 				"title" : "",
 				"properties": {
-					"kind": { enum : ["coffee", "tea", "orange juice"] },
+					"title" : { type : "string", title : "Series title" },
+					"seasons": {
+						type : "array",
+						items : {
+							properties : {
+								no : { type : "integer", title : "Season number" },
+								releaseDate : { type : "string", format : "date", title : "Release date" },
+								numEpisodes : { type : "integer", title : "Number of episodes" },
+							}
+
+						}
+					}
 				}
 			}
 		},
 
 		"properties": {
-			"orders" : {
+			"shows" : {
+				"title" : "",
 				"type" : "array",
 				"items" : {
 					"properties" : {
-						"product": {
+						"objectType": {
+							"title" : "Movie or Series",
 							"type": "string",
 							"enum": [
-								"IceCream",
-								"Drink",
+								"Movie",
+								"Series",
 							]
 						}
 					},
 					"dependencies": {
-						"product": {
+						"objectType": {
 							"oneOf": [
 								{
 									"properties": {
-										"product": {"enum": ["IceCream"]},
-										"detail" : {
-											"$ref": "#/definitions/IceCream"
+										"objectType": {"enum": ["Movie"]},
+										"objectContent" : {
+											"$ref": "#/definitions/Movie"
 										}
 									}
 								},
 								{
 									"properties": {
-										"product": {"enum": ["Drink"]},
-										"detail" : {
-											"$ref": "#/definitions/Drink"
+										"objectType": {"enum": ["Series"]},
+										"objectContent" : {
+											"$ref": "#/definitions/Series"
 										}
 									}
 								}

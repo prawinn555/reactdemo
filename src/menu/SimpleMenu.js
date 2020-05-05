@@ -8,7 +8,6 @@ class SimpleMenu extends PureComponent {
   menuListe = [
             ["ManageData" ,"Manage your data"],
             ["ManageForms"   ,"Manage your forms"],
-            ["EditRawJson" ,"Create a form (raw JSON)"],
 
             ["FormatJson" , "Example : How to format Json"],
             ["JsonFormExample" ,"Example : Dynamic form"],

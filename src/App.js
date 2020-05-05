@@ -7,7 +7,6 @@ import {
 
 import SimpleMenu   from './menu/SimpleMenu';
 import FormatJson   from './demo/FormatJson/FormatJson';
-import EditRawJson     from './demo/EditRawJson/EditRawJson';
 import ManageForms    from './demo/ManageForms/ManageForms';
 import ManageData    from './demo/ManageData/ManageData';
 import JsonFormExample     from './demo/DynamicForm/JsonFormExample';
@@ -32,9 +31,6 @@ export default function App(props) {
         <Switch>
           <Route path="/FormatJson">
             <FormatJson />
-          </Route>
-          <Route path="/EditRawJson">
-            <EditRawJson objectType="FORM" />
           </Route>
           <Route path="/ManageForms">
             <ManageForms />

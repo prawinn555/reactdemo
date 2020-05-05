@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Alert from 'react-bootstrap/Alert';
+import AutoFocusAlert from '../Alert/AutoFocusAlert';
 import ReactJson from 'react-json-view';
 import { findItemById, saveItem, formatJson } from '../../service/data-service';
 import DynamicFormChild from './DynamicFormChild';
@@ -14,10 +14,11 @@ class EditCustomForm extends PureComponent {
 		super(props);
 		// item id : props.item 
 		this.state = {
-			info : 'Loading...',
+			alert : 'Loading...',
+			varient : 'info'
 		};
 		this.idReadOnly = Boolean(props.param.id);
-
+		this.dataForRJSF = {};
 	}
 
 	componentDidMount() {
@@ -30,39 +31,53 @@ class EditCustomForm extends PureComponent {
 			}).catch((e)=> this.showError('Error while loading : '+e));
 		} else {
 			console.log('create an empty form');
-			this.loadForm(this.props.param.form)
+			this.loadSchema(this.props.param.form)
 			.then((form)=> {
-				this.updateMap('type', form.id);
-				this.updateMap('id', this.props.param.suggestedId);
-				if(this.props.param.initialData) {
-				  this.setState({ formattedObject : this.props.param.initialData });
-				}
+				this.setState({ 
+					id : this.props.param.suggestedId,
+					type : form.id,
+					description : this.props.param.initialDescription? this.props.param.initialDescription : null,
+					dataToSave : this.props.param.initialData? this.props.param.initialData : null 
+				});
+				this.dataForRJSF = this.adaptFormDefinition(this.props.param.initialData, form.id);
 				return this.showSuccess();
 			})
-			.catch((e)=> this.showError('Error while loading : '+e));
+			.catch((e)=> {
+				console.log(e);
+				this.showError('Error while loading : '+e)} );
 		}
 	}
+
+
 
    prefillForm = async (id) => {
 		return findItemById(id).then(
 				(listResult) => {
 					if(listResult.length>0) {
 						let item = listResult[0];
-						for (let [key, value] of Object.entries(item)) {
-							console.log(`${key}: ${value}`);
-							this.updateMap(key, value);
+						let chg = {};
+						for (let [k, v] of Object.entries(item)) {
+							if(k==='content') {
+								let d = formatJson(v);
+								chg.dataToSave = d;
+								this.dataForRJSF = this.adaptFormDefinition(d, item.type);
+							} else {
+								chg[k] = v;
+							}
 						}
+						console.log('setState',chg);
+						this.setState(chg);
 						return item;
 					} else {
 						return Promise.reject(`ID ${id} not found `);
 					}
 				}
 		).then(
-			(item) => this.loadForm(item.type)
+			(item) => this.loadSchema(item.type)
 		);
 	};
 
-	loadForm = async (form) => {
+	loadSchema = async (form) => {
 		if(form === 'FORM') {
 			this.setState({schema : SchemaForm});
 			console.log('use SchemaForm', SchemaForm);
@@ -89,20 +104,16 @@ class EditCustomForm extends PureComponent {
 
 
 	showError = (err) => {
-			this.setState({ success: null, info: null, warn : null, error : err});
+			this.setState({ alert: err, alertVariant : 'danger'});
 	};
-
 	showWarn = (msg) => {
-			this.setState({ success: null, info: null, warn : msg, error : null});
+			this.setState({ alert: msg, alertVariant : 'warning' });
 	};
-
-	showSuccess = (success) => {
-			this.setState({ success, info: null, warn : null, error : null, ready : true});
-			return "OK";
+	showSuccess = (msg) => {
+			this.setState({ alert: msg, alertVariant : 'success', ready : true});
 	};
-
 	showInfo = (msg) => {
-			this.setState({ success: null, info: msg, warn : null, error : null});
+			this.setState({  alert: msg, alertVariant : 'info' });
 	};
 
 	handleFormChange = (ev) => {
@@ -117,15 +128,16 @@ class EditCustomForm extends PureComponent {
 		try {
 			console.log('submit', data);
 			this.showInfo('Saving...');
-			this.setState({formattedObject : this.transformToSave(data.formData) });
-			let content = JSON.stringify(data.formData, null, ' ');
+			let dataToSave = this.transformToSave(data.formData);
+			this.setState({dataToSave});
+			let content = JSON.stringify(dataToSave, null, ' ');
 			let res = await saveItem({
 				id : this.state.id,
 				type : this.state.type,
 				description : this.state.description,
 				content : content
 			});
-			console.log('result', res);
+			// console.log('result', res);
 			if(res.status==='OK') {
 				this.showSuccess(res.message);
 			} else {
@@ -149,14 +161,32 @@ class EditCustomForm extends PureComponent {
 		if(!json.listFields) {
 			return json;
 		}
+		json = Object.assign({}, json);
 		json.type = 'object';
 		json.properties = {};
-		json.listFields.forEach( (prop, i) => {
+		json.required = [];
+		json.listFields.forEach( (propOriginal, i) => {
+			let prop = Object.assign({}, propOriginal);
 			json.properties[prop.fieldName] = prop;
+			if(prop.booleanRequired) {
+				json.required.push(prop.fieldName);
+			}
 			delete prop.fieldName;
 			if(prop.type==='date') {
 				prop.type = 'string';
 				prop.format = 'date';
+			} else if(prop.type==='enum') {
+				delete prop.type;
+				prop.enum = [];
+				if(prop.enumValues) {
+					//console.log('prop.enumValues', prop.enumValues);
+					prop.enumValues.split(',').forEach(
+						(s) => {
+							prop.enum.push(s.trim());
+						}
+					);
+					delete prop.enumValues;
+				}
 			}
 		});
 		delete json.listFields;
@@ -164,11 +194,14 @@ class EditCustomForm extends PureComponent {
 		return json
 	}
 
-	transformToShow = () => {
-		if(this.state.type!=='FORM') {
-			return this.state.formattedObject;
+	adaptFormDefinition = (jsonOriginal, type) => {
+		if(!jsonOriginal) {
+			return {};
 		}
-		let json = Object.assign({},this.state.formattedObject);
+		if(type!=='FORM') {
+			return jsonOriginal;
+		}
+		let json = Object.assign({},jsonOriginal);
 		// transform 'listFields' to 'properties'
 		if(!json.properties) {
 			return json;
@@ -180,59 +213,40 @@ class EditCustomForm extends PureComponent {
 			if(prop.format==='date') {
 				prop.type = 'date';
 				delete prop.format;
+			} else if(prop.enum) {
+				prop.type = 'enum';
+				prop.enumValues = prop.enum.join(', ');
+				delete prop.enum;
+			}
+			if(json.required && json.required.includes(v)) {
+				prop.booleanRequired = true;
 			}
 			json.listFields.push(prop);
 		});
 		delete json.properties;
-		console.log('transformToShow', this.state.formattedObject, json);
+		console.log('adaptFormDefinition', jsonOriginal, json);
 		return json
 	}
 
     onError = (e) => {
 		this.showWarn(`Problem with a form? 
-			${(e && e[0] && e[0].message)? e.message : ''}` );
+			${(e && e[0] && e[0].stack)? e[0].stack : ''}` );
 		console.log('Form error', e);
 	};
 
 
 
-	updateMap = (k,v) => {
-		console.log('updateMap', k, v);
-		if(k==='content') {
-			this.setState({formattedObject : formatJson(v)});
-		} else {
-			var chg = {};
-			chg[k] = v;
-			this.setState( 
-				chg
-			);
-		}
-	};
+
+
 
 
   	render() {
 
 		return ( <div className="px-2" >
-			{ this.state.success &&
-				<Alert variant='success' >
-					{this.state.success}
-				</Alert>
-			}
-			{ this.state.info &&
-				<Alert variant='info' >
-					{this.state.info}
-				</Alert>
-			}
-			{ this.state.warn &&
-				<Alert variant='warning' >
-					{this.state.warn}
-				</Alert>
-			}
-			{ this.state.error &&
-				<Alert variant='danger' >
-					{this.state.error}
-				</Alert>
-			}
+
+			<AutoFocusAlert alert={this.state.alert} alertVariant={this.state.alertVariant} >
+			</AutoFocusAlert>
+
 			{ this.state.ready &&
 				<>
 					<Form>
@@ -278,16 +292,16 @@ class EditCustomForm extends PureComponent {
 						<DynamicFormChild schema={this.state.schema}
 								onSubmit={this.onSubmit}
 								onError={this.onError} 
-								formData={this.transformToShow()}
+								formData={this.dataForRJSF}
 								>
 						</DynamicFormChild>
 					</div>
 
 					
-					{this.state.formattedObject && 
+					{this.state.dataToSave && 
 						<div className="py-2" >
 							<div>View JSON data</div>
-							<ReactJson displayDataTypes={false} src={this.state.formattedObject} collapsed="true"/>
+							<ReactJson displayDataTypes={false} src={this.state.dataToSave} collapsed="true"/>
 						</div>
 					}
 				</>
