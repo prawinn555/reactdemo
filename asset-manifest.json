@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/reactdemo/static/css/main.75fcedc2.chunk.css",
+    "main.js": "/reactdemo/static/js/main.33e30a54.chunk.js",
+    "main.js.map": "/reactdemo/static/js/main.33e30a54.chunk.js.map",
+    "runtime-main.js": "/reactdemo/static/js/runtime-main.cd8e0758.js",
+    "runtime-main.js.map": "/reactdemo/static/js/runtime-main.cd8e0758.js.map",
+    "static/css/2.0d908a3d.chunk.css": "/reactdemo/static/css/2.0d908a3d.chunk.css",
+    "static/js/2.51c1e650.chunk.js": "/reactdemo/static/js/2.51c1e650.chunk.js",
+    "static/js/2.51c1e650.chunk.js.map": "/reactdemo/static/js/2.51c1e650.chunk.js.map",
+    "index.html": "/reactdemo/index.html",
+    "precache-manifest.84edd394f0fbaf4ec4299caee7cc62dc.js": "/reactdemo/precache-manifest.84edd394f0fbaf4ec4299caee7cc62dc.js",
+    "service-worker.js": "/reactdemo/service-worker.js",
+    "static/css/2.0d908a3d.chunk.css.map": "/reactdemo/static/css/2.0d908a3d.chunk.css.map",
+    "static/css/main.75fcedc2.chunk.css.map": "/reactdemo/static/css/main.75fcedc2.chunk.css.map",
+    "static/js/2.51c1e650.chunk.js.LICENSE.txt": "/reactdemo/static/js/2.51c1e650.chunk.js.LICENSE.txt",
+    "static/media/bootstrap.min.css": "/reactdemo/static/media/glyphicons-halflings-regular.fa277232.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cd8e0758.js",
+    "static/css/2.0d908a3d.chunk.css",
+    "static/js/2.51c1e650.chunk.js",
+    "static/css/main.75fcedc2.chunk.css",
+    "static/js/main.33e30a54.chunk.js"
+  ]
+}
