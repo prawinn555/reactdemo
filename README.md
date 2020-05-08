@@ -1,4 +1,4 @@
-# Learn how to use React.js to build a Web App with RESTful service.
+# Learn how to use React.js to build a Web App with RESTful service 🐇.
 
 Hi, Welcome to my project.
 Here, you will find example code to create a web app, using the following frameworks
@@ -20,25 +20,28 @@ The REST service is another project.  The service is deployed here
 
 
 
-## Online live demo
+## Online live demo 🐇
 
-Visit [Live demo](https://reactdemo.glitch.me/)
+Visit Live demo
+* On Github page : https://prawinn555.github.io/reactdemo/
+* On stackblitz : https://stackblitz.com/edit/dynamic-form5
+* On codesandbox : https://codesandbox.io/s/github/prawinn555/reactdemo/tree/codeSandBox
 
+## Wiki (how to use the application) 🐇
 
-
-## Code
-
-From [Github](https://github.com/prawinn555/reactdemo)
-
-
-## Installation
+(wiki)[https://github.com/prawinn555/reactdemo/wiki]
 
 
-### Prerequisites
+
+
+## Installation 🐇
+
+
+### Prerequisites 🐶
 
 * Install NodeJS
 
-### Installation
+### Installation & run 🏃‍♂️
 
 
 ```
@@ -49,35 +52,37 @@ npm start
  
 ```
 
-* Change your database URL in the file .env. 
+
+
+* Package and deploy 📦
+
+Configure Github URL in package.json
+
+```
+   "homepage": "http://<user>.github.io/<your repository>",
+```
+
+Create a package in the directory 'build' and d�ploy on Githib page.
 
 
 ```
-TODO
-
-```
-
-* Run the application
-
-```
-npm start
+npm run build
+npm run deploy
  
 ```
 
+Configure Github page, see https://pages.github.com/
+Choose the branche 'hg-pages'.
 
-## Understand the code
+![image](https://user-images.githubusercontent.com/50048285/81414659-9c58eb00-9147-11ea-83d6-96cea9986613.png)
 
 
-### Entry point and rendering
 
-* The entry point is index.js
 
-* The script index.js will generate the HTML page from index.html.
-The module App is call, and the content is put in the root element in index.html.
 
-```
-ReactDOM.render(<App />, document.getElementById("root"));
-```
+## Understand the code  🐇
+
+see Wiki https://github.com/prawinn555/reactdemo/wiki
 
 
 
@@ -85,7 +90,10 @@ ReactDOM.render(<App />, document.getElementById("root"));
 
 
 
-## Acknowledgments
 
-* All framework contributors
+
+
+## Acknowledgments 🐇
+
+* Thank you very much for all framework contributors 🙏🙏🙏
 
