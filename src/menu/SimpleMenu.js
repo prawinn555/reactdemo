@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import icons from 'glyphicons';
+import {getQueryStringValue} from '../service/utils';
 
 
 class SimpleMenu extends PureComponent {
@@ -19,10 +20,10 @@ class SimpleMenu extends PureComponent {
        menuItemText : ""
     };
 
-    let menuKey =  window.location.pathname;
-    console.log('window.location', window.location);
+    let menuKey =  getQueryStringValue('menu');
+    console.log('menuKey', menuKey);
     
-    let menu = this.menuListe.find(element => '/'+element[0] === menuKey );
+    let menu = this.menuListe.find(element => element[0] === menuKey );
     if(menu) {
       this.state.menuItemText = menu[1];
     }

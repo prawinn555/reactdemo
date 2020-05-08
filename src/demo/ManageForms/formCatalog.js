@@ -12,7 +12,7 @@ var movie = {
 			},
 			movieGenre : {
 				type : 'enum',
-				enumValues : 'Horror, Comedy, Drama, Avenger, Sci-fi',
+				enumValues : 'Action, Horror, Comedy, Drama, Advenger, Sci-fi',
 				title : 'Genre'
 			},
 			mainActors : {
