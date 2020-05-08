@@ -22,7 +22,9 @@ The REST service is another project.  The service is deployed here
 
 ## Online live demo
 
-Visit [Live demo](https://reactdemo.glitch.me/), powered by Glitch
+Visit [Live demo](https://reactdemo.glitch.me/)
+
+
 
 ## Code
 
@@ -43,6 +45,7 @@ From [Github](https://github.com/prawinn555/reactdemo)
 git clone https://github.com/prawinn555/reactdemo
 cd reactdemo/
 npm install
+npm start
  
 ```
 

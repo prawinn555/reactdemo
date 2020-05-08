@@ -1,51 +1,27 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-
 import SimpleMenu   from './menu/SimpleMenu';
-import FormatJson   from './demo/FormatJson/FormatJson';
-import ManageForms    from './demo/ManageForms/ManageForms';
-import ManageData    from './demo/ManageData/ManageData';
-import JsonFormExample     from './demo/DynamicForm/JsonFormExample';
-
-
-//import dataLoaderAndFilter from "./dataLoaderAndFilter";
+import Dynamic from './Dynamic';
+import {getQueryStringValue} from './service/utils';
 
 
 export default function App(props) {
 
 
+	let menu = getQueryStringValue('menu') 
+    console.log('menu', menu);
+
     return (
       <div>
 
-      <Router>
+
 
         <SimpleMenu selectedMenu={''} >
         </SimpleMenu>
 
         <hr/>
-        
-        <Switch>
-          <Route path="/FormatJson">
-            <FormatJson />
-          </Route>
-          <Route path="/ManageForms">
-            <ManageForms />
-          </Route>
-          <Route path="/ManageData">
-            <ManageData  />
-          </Route>
-          <Route path="/JsonFormExample">
-            <JsonFormExample />
-          </Route>
-          <Route path="/">
-            <h1>Please select a menu</h1>
-          </Route>
-        </Switch>
-      </Router>
+		{menu &&  <Dynamic path={menu} /> }
+   		{!menu && <div>Please select a menu</div>}
+
 
       </div>
       
