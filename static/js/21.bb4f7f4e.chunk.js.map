@@ -1,1 +1,0 @@
-{"version":3,"sources":["env.js"],"names":["serviceUrl"],"mappings":"wGAEA,kDAAO,IAAIA,EACN","file":"static/js/21.bb4f7f4e.chunk.js","sourcesContent":["\r\n\r\nexport var serviceUrl =   // 'http://localhost:1234/'; \r\n     'https://generic-db.glitch.me/';\r\n"],"sourceRoot":""}

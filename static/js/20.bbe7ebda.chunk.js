@@ -1,0 +1,2 @@
+(this.webpackJsonpreactdemo=this.webpackJsonpreactdemo||[]).push([[20],{40:function(e,t,c){"use strict";c.r(t),c.d(t,"serviceUrl",(function(){return r}));var r="https://generic-db.glitch.me/"}}]);
+//# sourceMappingURL=20.bbe7ebda.chunk.js.map
