@@ -8,10 +8,21 @@ span.title  {
 	font-weight: bold;
 }
 
-span.action:hover  {
+span.action:hover {
 	text-decoration: underline;
 }
 
+span.genre {
+	color : YellowGreen;
+}
+
+span.cast {
+	color : RoyalBlue;
+}
 div.movie {
 	border: #bee5eb 1px solid;
+}
+
+td.poster {
+	width : 25%;
 }
