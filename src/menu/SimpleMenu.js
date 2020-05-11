@@ -7,11 +7,12 @@ import {getQueryStringValue} from '../service/utils';
 class SimpleMenu extends PureComponent {
 
   menuListe = [
-            ["./demo/ManageData/ManageData" ,"Manage your data"],
-            ["./demo/ManageForms/ManageForms"   ,"Manage your forms"],
+            ["ManageData/ManageData" ,"Manage your data"],
+            ["ManageForms/ManageForms"   ,"Manage your forms"],
+            ["Movies/Movies" ,"Finding movies"],
 
-            ["./demo/FormatJson/FormatJson" , "Example : How to format Json"],
-            ["./demo/DynamicForm/JsonFormExample" ,"Example : Dynamic form"],
+            ["FormatJson/FormatJson" , "Example : How to format Json"],
+            ["DynamicForm/JsonFormExample" ,"Example : Dynamic form"],
   ];
 
   constructor(props) {
@@ -33,7 +34,7 @@ class SimpleMenu extends PureComponent {
 
 
   render() {
-    return (<div className="container">
+    return (<div className="container  py-2">
 
       <div className="row">
         

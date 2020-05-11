@@ -4,7 +4,8 @@ import Alert from 'react-bootstrap/Alert';
 import ConfirmModal from '../Modal/ConfirmModal';
 import ViewItem   from './ViewItem.js';
 import icons from 'glyphicons';
-import { findItems, deleteItemById, getTimeStamp } from '../../service/data-service';
+import { findItems, deleteItemById } from '../../service/data-service';
+import { getTimeStamp } from '../../service/utils';
 import EditAsRawJson from '../EditRawJson/EditRawJson';
 import EditCustomForm from '../DynamicForm/EditCustomForm';
 

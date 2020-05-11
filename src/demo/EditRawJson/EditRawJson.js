@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import AutoFocusAlert from '../Alert/AutoFocusAlert';
 import ReactJson from 'react-json-view';
-import { findItemById, saveItem, formatJson } from '../../service/data-service';
+import { findItemById, saveItem } from '../../service/data-service';
+import { formatJson } from '../../service/utils';
 
 class EditRawJson extends PureComponent {
   constructor(props) {

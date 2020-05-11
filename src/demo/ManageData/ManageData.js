@@ -2,7 +2,8 @@ import React, { PureComponent } from "react";
 import icons from 'glyphicons';
 import ManageList from './ManageList';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { findItems, getTimeStamp } from '../../service/data-service';
+import { findItems } from '../../service/data-service';
+import { getTimeStamp } from '../../service/utils';
 import ConfirmModal from '../Modal/ConfirmModal';
 import EditCustomForm from '../DynamicForm/EditCustomForm';
 

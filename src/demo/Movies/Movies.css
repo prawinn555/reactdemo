@@ -1,0 +1,17 @@
+.popover{
+    max-width: 70%; /* Max Width of the popover (depending on the container!) */
+}
+
+
+span.title  {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+span.action:hover  {
+	text-decoration: underline;
+}
+
+div.movie {
+	border: #bee5eb 1px solid;
+}

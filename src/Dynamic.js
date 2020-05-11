@@ -7,9 +7,9 @@ class Dynamic extends Component {
   }
   componentDidMount() {
 	// import(this.props.path) => not work
-    import(''+this.props.path)
-      .then(module => this.setState({ module: module.default }))
-	  .catch((e)=> console.log(e));
+    import(`./demo/${this.props.path}`)
+       .then(module => this.setState({ module: module.default }))
+	   .catch((e)=> console.log(e));
   }
   render() {
     const { module: Component } = this.state; 

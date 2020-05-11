@@ -3,7 +3,8 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import AutoFocusAlert from '../Alert/AutoFocusAlert';
 import ReactJson from 'react-json-view';
-import { findItemById, saveItem, formatJson } from '../../service/data-service';
+import { findItemById, saveItem } from '../../service/data-service';
+import { formatJson } from '../../service/utils';
 import DynamicFormChild from './DynamicFormChild';
 import SchemaForm from './SchemaForm';
 
