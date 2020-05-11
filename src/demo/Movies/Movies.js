@@ -1,14 +1,12 @@
 import React, { PureComponent } from "react";
 import Form from 'react-bootstrap/Form';
-import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
 import AutoFocusAlert from '../Alert/AutoFocusAlert';
 import ReactJson from 'react-json-view';
 import { findMovies } from '../../service/movies-service';
 import { correctJson, formatJson } from '../../service/utils';
+import Movie from './Movie';
 import './Movies.css';
 
 const max = 10;
@@ -23,6 +21,7 @@ class Movies extends PureComponent {
 			alert : 'What are you looking for?',
 			alertVariant : 'info',
 			search_title : '',
+			search_cast : '',
 			search_year : '',
 			search_query : '',
 			search_labels : [],
@@ -59,36 +58,46 @@ class Movies extends PureComponent {
        if(this.state.search_title.trim()) {
 	      query.title = `/${this.state.search_title.trim()}/`;
 	   }
+       if(this.state.search_cast.trim()) {
+	      query.cast = `/${this.state.search_cast.trim()}/`;
+	   }
        if( this.state.search_year.trim() ) {
 	      let y = this.state.search_year.trim();
-          if(y.startWith('{')) {
+          if(y.startsWith('{')) {
 			 query.year = formatJson(correctJson(y));
 		  } else {
-			 query.year = `/${this.state.search_title}/`;
+			 query.year = parseInt(y);
 		  }
 	   }
-       let moreQuery = [];
        if(this.state.search_query.trim()) {
 	      let q = this.state.search_query.trim();
-          moreQuery.push(formatJson(correctJson(q)));
+          q = formatJson(correctJson(q));
+		  Object.keys(q).forEach( k => query[k] =  q[k] );
 	   }
-       if(moreQuery.length>0) {
-          query.$and =  moreQuery;
-       }
+       this.addLabelsToQuery('cast', query);
+       this.addLabelsToQuery('genres', query);
 	   this.setState({query});
        return query;
      }
 
+    addLabelsToQuery = (attribute, query) => {
+	   let labels = this.state.search_labels.filter(l => l.type===attribute);
+       if(labels.length===0) return;
+       query[attribute] = {
+	       $in : labels.map(l => l.value)
+	   };
+	}
+
 
     addLabel = (p) => {
-	    console.log('addLabel', p);
+	    // console.log('addLabel', p);
 		const v = this.state.search_labels.find(l => l.type===p.type && l.value===p.value);
 		if(v) {
 			return;
 		} else {
 			this.setState( {
-				search_labels : new Array(...this.state.search_labels, p)
-			});
+				search_labels : [...this.state.search_labels, p]
+			}, this.find);
 		}
     }
 
@@ -97,7 +106,7 @@ class Movies extends PureComponent {
 		if(v) {
 			this.setState( {
 				search_labels : this.state.search_labels.filter(l =>  !Object.is(l,v)) 
-			});
+			}, this.find);
 		} 
     }
 
@@ -123,7 +132,7 @@ class Movies extends PureComponent {
 				
 					<InputGroup className="mb-3">
 						<InputGroup.Prepend>
-						<InputGroup.Text id="fieldLabel-title">Title (part of)</InputGroup.Text>
+						<InputGroup.Text id="fieldLabel-title">Title</InputGroup.Text>
 						</InputGroup.Prepend>
 						<Form.Control 
 							name="search_title"
@@ -136,12 +145,25 @@ class Movies extends PureComponent {
 					
 					<InputGroup className="mb-3">
 						<InputGroup.Prepend>
+						<InputGroup.Text id="fieldLabel-cast">Cast</InputGroup.Text>
+						</InputGroup.Prepend>
+						<Form.Control 
+							name="search_cast"
+							value={this.state.search_cast}
+							placeholder="Ex. tom cruise"
+							onChange={this.handleFormChange}
+							aria-describedby="fieldLabel-cast"
+							/>
+					</InputGroup>
+										
+					<InputGroup className="mb-3">
+						<InputGroup.Prepend>
 						<InputGroup.Text id="fieldLabel-title">Year</InputGroup.Text>
 						</InputGroup.Prepend>
 						<Form.Control 
 							name="search_year"
 							value={this.state.search_year}
-							placeholder="Ex. 2014 or { $gt : 2014 }"
+							placeholder="Ex. 2014 or { $gt : 2014 } or { $gte : 2014 }"
 							onChange={this.handleFormChange}
 							aria-describedby="fieldLabel-year"
 							/>
@@ -154,7 +176,7 @@ class Movies extends PureComponent {
 						<Form.Control 
 							name="search_query"
 							value={this.state.search_query}
-							placeholder="Ex. {plot :/devil/}"
+							placeholder="Ex. {directors:/spielberg/}"
 							onChange={this.handleFormChange}
 							aria-describedby="fieldLabel-query"
 							/>
@@ -162,13 +184,13 @@ class Movies extends PureComponent {
 					
 					<div className="py-2">
 						Labels : {this.state.search_labels.map((l) => 
-						  { console.log('render label', l);
-							return <span className="px-2">
-							<Button key={`T-${l.type}-V-${l.value}`} 
+						  { 
+							return <span className="px-2"  key={`T-${l.type}-V-${l.value}`} >
+							<Button 
 									onClick={()=>this.removeLabel(l)}
 									className={`btn-sm`} 
 									variant={l.type==='cast'? 'outline-primary' : 'outline-success'} >
-									{l.value} <span>❎ </span>
+									{l.value} <span role="img">❎ </span>
 							</Button></span>
 						  }
 						)}
@@ -191,63 +213,13 @@ class Movies extends PureComponent {
 				{this.state.data && this.state.data.movies &&
 					<div className="py-2" >
 					{ this.state.data.movies.map( (m)=>
-						<div className="px-2 py-2"
-							key={`movie-${m._id}`}
-						><div className="movie"><div className="px-2 py-2"  >
-						
-							<OverlayTrigger trigger="hover,focus" placement="right" overlay={
-								  <Popover id={`pop-${m._id}`} >
-								    <Popover.Title as="h3">Full plot</Popover.Title>
-								    <Popover.Content>
-								      {m.fullplot}
-								    </Popover.Content>
-								  </Popover>
-								}>
-								<span className="action title">{m.title} ({m.year})</span>
-							</OverlayTrigger>
-							
-							<Table className="movieTable">
-								<tbody><tr>
-								   <td className="poster">
-										{m.poster && 
-										<img style={{width:'auto',height:'300px'}} 
-											src={m.poster} /> }
-								   </td>
-								   <td>
-											<div>Cast : {
-												m.cast.map( (el, i) =>(
-													<span key={el}>{i>0&& <span>,&nbsp;</span>}
-													<span className="action cast" 
-														onClick={()=>this.addLabel({type:'cast',value:el})}>{el}</span></span>
-												))
-											}</div>
-											<div>{
-												m.genres.map( (el, i) =>(
-													<span key={el}>{i>0&& <span>,&nbsp;</span>}
-													<span className="action genre" 
-														onClick={()=>this.addLabel({type:'genres',value:el})}>{el}</span></span>
-												))
-											}</div>
-											<div>{m.plot}</div>
-									</td>
-								</tr></tbody>
-							</Table>
-							
-
-						</div></div></div>
-						
+						<Movie key={m._id} movie={m} addLabel={this.addLabel} />
 							
 							
 					)}</div>
   				}
 
 
-				{this.state.data && 
-					<div className="py-2" >
-						<div>Json view</div>
-						<ReactJson displayDataTypes={false} src={this.state.data} collapsed />
-					</div>
-  				}
 
 		</div>
 	}

@@ -1,5 +1,11 @@
-.popover{
-    max-width: 70%; /* Max Width of the popover (depending on the container!) */
+.popFullPlot {
+    max-width: 50%; /* Max Width of the popover (depending on the container!) */
+}
+
+.popMovieJson {
+	max-width: 60%; /* Max Width of the popover (depending on the container!) */
+	max-height: 80%;
+	overflow-y: auto;
 }
 
 
@@ -25,4 +31,9 @@ div.movie {
 
 td.poster {
 	width : 25%;
+}
+
+.plot {
+	font-style: italic;
+	font-size: 0.9em;
 }
