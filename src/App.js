@@ -11,7 +11,7 @@ export default function App(props) {
     console.log('menu', menu);
 
     return (
-      <div>
+      <div className="p-3" >
 
 
 

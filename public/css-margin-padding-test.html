@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+p {
+  font-family: verdana;
+  font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<h1>My CSS Example</h1>
+
+
+Show how to use margin/ padding / border / display flex.
+
+<style>
+
+.content {
+	height:100%; width:100%; background-color: blue; color:white;
+}
+
+.testElem {
+	background-color: lightblue; width:80px; height:80px; border: 10px solid red; padding:10px; margin:10px; 
+	
+}
+
+</style>
+
+
+
+<div style="background-color:lightgreen">
+
+  <div style="background-color: lightblue; width:140px; height:80px;" >
+      <div class="content">140px (80 +padding10*2 +border10*2 + margin10*2)</div>
+  </div>
+  
+  <div style="background-color: white;width:100%;height:30px">
+  	30px space
+  </div>
+  
+  <div style="display:flex">
+      <div class="testElem"  >
+        <div class="content">content</div>
+      </div>
+     <div style="width:80px; background-color:lightgray;">
+       next component
+     </div>
+  </div>
+  
+  <div style="height:30px; width:140px; background-color:lightgray">
+     next component
+  </div>
+
+  <div style="background-color: white;width:100%;height:30px">
+  	30px space (no next-component / no parent)
+  </div>
+
+
+      <div class="testElem"  >
+        <div class="content">content</div>
+      </div>
+
+
+</div>
+
+</body>
+</html>

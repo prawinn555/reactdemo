@@ -39,11 +39,14 @@ class SimpleMenu extends PureComponent {
       <div className="row">
         
         {icons.rabbitFace}
-        Welcome !!! <a target="__BLANK" href="https://github.com/prawinn555/reactdemo/wiki">Wiki</a>
+        <span className="px-1">Welcome !!!</span>
+		<a target="__BLANK" 
+							href="https://github.com/prawinn555/reactdemo/wiki" 
+							className="px-1" > please see Wiki</a>
         {icons.rabbit}
 
 
-        <Dropdown className="px-2">
+        <Dropdown className="px-1">
           <Dropdown.Toggle variant="primary" id="dropdown-basic">
             Menu
           </Dropdown.Toggle>
@@ -56,7 +59,7 @@ class SimpleMenu extends PureComponent {
           </Dropdown.Menu>
         </Dropdown>
 
-         <header>{this.state.menuItemText}</header>
+         <header className="px-3">{this.state.menuItemText}</header>
       </div>
     </div>);
   }

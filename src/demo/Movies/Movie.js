@@ -31,14 +31,14 @@ export default function Movie(props) {
 						src={m.poster} alt={m.poster} /> }
 			   </td>
 			   <td>
-						<div>Cast : {
+						<div>Cast : { m.cast && 
 							m.cast.map( (el, i) =>(
 								<span key={el}>{i>0&& <span>,&nbsp;</span>}
 								<span className="action cast" 
 									onClick={()=>props.addLabel({type:'cast',value:el})}>{el}</span></span>
 							))
 						}</div>
-						<div>{
+						<div>{m.genres && 
 							m.genres.map( (el, i) =>(
 								<span key={el}>{i>0&& <span>,&nbsp;</span>}
 								<span className="action genre" 
@@ -46,9 +46,11 @@ export default function Movie(props) {
 							))
 						}</div>
 						
+						{m.directors && 
 						<div>
 							Directors : {m.directors.join(', ')}
 						</div>
+						}
 												
 						<div>
 							{m.countries && m.countries.join(', ')}  {m.languages && `(${m.languages.join(', ')})`}

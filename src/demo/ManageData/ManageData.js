@@ -89,7 +89,7 @@ class ManageData extends PureComponent {
 			</ConfirmModal>
 		}
 		
-		<Dropdown className="px-2">
+		<Dropdown>
 		<Dropdown.Toggle variant="primary" id="dropdown-basic">
 			Filter by an object type
 		</Dropdown.Toggle>
