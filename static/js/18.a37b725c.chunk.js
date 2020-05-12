@@ -1,2 +1,0 @@
-(this.webpackJsonpreactdemo=this.webpackJsonpreactdemo||[]).push([[18],{52:function(e,t,i){"use strict";i.r(t),i.d(t,"exampleForm",(function(){return r}));var r={title:"Test my form",description:"A simple form example.",type:"object",required:["firstName","lastName"],properties:{firstName:{type:"string",title:"First name",default:"Chuck"},lastName:{type:"string",title:"Last name"},telephone:{type:"string",title:"Telephone",minLength:10}}}}}]);
-//# sourceMappingURL=18.a37b725c.chunk.js.map
