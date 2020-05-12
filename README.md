@@ -62,7 +62,7 @@ Configure Github URL in package.json
    "homepage": "http://<user>.github.io/<your repository>",
 ```
 
-Create a package in the directory 'build' and d�ploy on Githib page.
+Create a package in the directory 'build' and deploy on Githib page.
 
 
 ```
