@@ -1,6 +1,4 @@
-.popFullPlot {
-    max-width: 50%; 
-}
+
 
 
 .popMovieJson {
@@ -9,7 +7,7 @@
 
 
 
-@media only screen and (min-width: 801px) {
+@media only screen and (min-width: 1000px) {
 	td.poster img {
 		max-height : 400px;
 	}
@@ -17,12 +15,20 @@
 		width : 30%;
 		/*background-color: lightblue;*/
 	}
+
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 999px) {
 	td.poster {
 		width : 50%;
 		/*background-color: red;*/
+	}
+	/* hidden if screen too small */
+	.plot {
+		display: none;
+	}
+	.popFullPlot {
+    	max-width: 80%; 
 	}
 }
 

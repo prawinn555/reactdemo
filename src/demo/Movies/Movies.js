@@ -190,7 +190,7 @@ class Movies extends PureComponent {
 									onClick={()=>this.removeLabel(l)}
 									className={`btn-sm`} 
 									variant={l.type==='cast'? 'outline-primary' : 'outline-success'} >
-									{l.value} <span role="img">❎ </span>
+									{l.value} <span role="img" aria-label="remove">❎ </span>
 							</Button></span>
 						  }
 						)}

@@ -4,10 +4,15 @@ import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import ReactJson from 'react-json-view';
+import { useMediaQuery } from 'react-responsive';
 
 export default function Movie(props) {
 
 	let m = props.movie;
+	
+	const isDesktopOrLaptop = useMediaQuery({
+      query: '(min-device-width: 1000px)'
+    })
 	const overlay = <Popover id={`pop-${m._id}`} className="popFullPlot" >
 			    <Popover.Title as="h3">Full plot</Popover.Title>
 			    <Popover.Content>
@@ -20,7 +25,10 @@ export default function Movie(props) {
 		key={`movie-${m._id}`}
 		><div className="movie"><div className="px-2 py-2"  >
 	
-		<OverlayTrigger placement="right" overlay={overlay}>
+		<OverlayTrigger placement={isDesktopOrLaptop? 'right': 'bottom'}
+		     trigger={['hover', 'focus', 'click']}
+			 rootClose
+			 overlay={overlay}>
 			<span className="action title">{m.title} ({m.year})</span>
 		</OverlayTrigger>
 		
@@ -72,7 +80,7 @@ export default function Movie(props) {
 								
 							}>
 								<Button variant="light" className="btnMovieJson" >
-									🎞️ More data
+									<span role="img" aria-label="more">🎞 </span> More data
 								</Button>
 							</OverlayTrigger>
 						</div>

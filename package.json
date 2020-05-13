@@ -2,7 +2,7 @@
   "name": "reactdemo",
   "version": "1.0.0",
   "description": "Demo for react framework",
-   "homepage": "http://prawinn555.github.io/reactdemo",
+  "homepage": "http://prawinn555.github.io/reactdemo",
   "devDependencies": {
     "prettier": "^1.13.0",
     "react-scripts": "^3.4.1",
@@ -16,7 +16,8 @@
     "react": "^16.8.0",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.8.0",
-    "react-json-view": "^1.19.1"
+    "react-json-view": "^1.19.1",
+    "react-responsive": "^8.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
