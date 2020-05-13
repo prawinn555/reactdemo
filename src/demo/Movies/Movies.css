@@ -8,15 +8,16 @@
 }
 
 .poster {
-	width : 50%;
+	max-width : 50%;
 }
 
 .poster img {
-	max-height: 300px;
+	max-width: unset;
+	max-height: 30%;
 }
 
 .movieInfo {
-	width : 50%;
+
 	
 }
 span.title  {
@@ -39,9 +40,6 @@ div.movie {
 	border: #bee5eb 1px solid;
 }
 
-td.poster {
-	width : 25%;
-}
 
 .plot {
 	font-style: italic;

@@ -16,7 +16,7 @@ export default function Movie(props) {
 			  </Popover>;
 	
 	
-	return  <div className="px-2 py-2"
+	return  <div className="py-1"
 		key={`movie-${m._id}`}
 		><div className="movie"><div className="px-2 py-2"  >
 	
