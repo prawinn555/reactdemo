@@ -1,5 +1,6 @@
 import React from "react";
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import ReactJson from 'react-json-view';
@@ -58,7 +59,8 @@ export default function Movie(props) {
 						<div className="plot">{m.plot}</div>
 						
 						<div className="py-2" >
-							<OverlayTrigger trigger="click" placement="right" rootClose  overlay={
+							<OverlayTrigger trigger="click" rootClose placement="bottom" 
+							 overlay={
 								
 								<Popover id={`pop-json-${m._id}`} className="popMovieJson" >
 								    <Popover.Title as="h3">Json view</Popover.Title>
@@ -69,7 +71,9 @@ export default function Movie(props) {
 								
 								
 							}>
-								<span role="img" className="action">🎞️ More data</span>
+								<Button variant="light" className="btnMovieJson" >
+									🎞️ More data
+								</Button>
 							</OverlayTrigger>
 						</div>
 						

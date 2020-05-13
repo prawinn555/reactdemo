@@ -1,11 +1,10 @@
 .popFullPlot {
-    max-width: 50%; /* Max Width of the popover (depending on the container!) */
+    max-width: 50%; 
 }
 
+
 .popMovieJson {
-	max-width: 60%; /* Max Width of the popover (depending on the container!) */
-	max-height: 80%;
-	overflow-y: auto;
+	max-width: 90%; 
 }
 
 .poster {
