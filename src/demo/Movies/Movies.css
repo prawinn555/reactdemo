@@ -7,19 +7,26 @@
 	max-width: 90%; 
 }
 
-.poster {
-	max-width : 50%;
+
+
+@media only screen and (min-width: 801px) {
+	td.poster img {
+		max-height : 400px;
+	}
+	td.poster {
+		width : 30%;
+		/*background-color: lightblue;*/
+	}
 }
 
-.poster img {
-	max-width: unset;
-	max-height: 30%;
+@media only screen and (max-width: 800px) {
+	td.poster {
+		width : 50%;
+		/*background-color: red;*/
+	}
 }
 
-.movieInfo {
 
-	
-}
 span.title  {
 	font-size: 1.2em;
 	font-weight: bold;
