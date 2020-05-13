@@ -27,10 +27,9 @@ export default function Movie(props) {
 			<tbody><tr>
 			   <td className="poster">
 					{m.poster && 
-					<img style={{width:'auto',height:'300px'}} 
-						src={m.poster} alt={m.poster} /> }
+					<img  className="img-fluid" src={m.poster} alt={m.poster} /> }
 			   </td>
-			   <td>
+			   <td className="movieInfo">
 						<div>Cast : { m.cast && 
 							m.cast.map( (el, i) =>(
 								<span key={el}>{i>0&& <span>,&nbsp;</span>}

@@ -8,7 +8,18 @@
 	overflow-y: auto;
 }
 
+.poster {
+	width : 50%;
+}
 
+.poster img {
+	max-height: 300px;
+}
+
+.movieInfo {
+	width : 50%;
+	
+}
 span.title  {
 	font-size: 1.2em;
 	font-weight: bold;
