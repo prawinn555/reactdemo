@@ -62,7 +62,7 @@ Configure Github URL in package.json
    "homepage": "http://<user>.github.io/<your repository>",
 ```
 
-Create a package in the directory 'build' and deploy on Githib page.
+Create a package in the directory 'build' and deploy on Github pages.
 
 
 ```
@@ -72,7 +72,7 @@ npm run deploy
 ```
 
 Configure Github page, see https://pages.github.com/
-Choose the branche 'hg-pages'.
+Choose the branche 'gh-pages'.
 
 ![image](https://user-images.githubusercontent.com/50048285/81414659-9c58eb00-9147-11ea-83d6-96cea9986613.png)
 
