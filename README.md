@@ -73,8 +73,8 @@ npm run deploy
 
 Configure Github page, see https://pages.github.com/
 Choose "project page"
-(There are 2 kinds of configuration : "Organisation page" is the global page  https://<username>.github.io. 
-"Project page" is the project spécifique page  https://<username>.github.io/<projectname>).
+(There are 2 kinds of configuration : "Organisation page" is the global page  https://[username].github.io. 
+"Project page" is the project spécifique page  https://[username].github.io/[projectname]).
 
 
 To publish data, i chose the branche 'gh-pages' (to be created manually).
