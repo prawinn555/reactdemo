@@ -79,8 +79,9 @@ Choose the "project page" tab.
 "Project page" is the project spécifique page  https://[username].github.io/[projectname]).
 
 
-To publish data, i chose the branche 'gh-pages' (to be created manually).
-This is the page to select a branche to publish :
+The tool "gh-pages" is used to compile and publish the application.
+Take a look at package.json.
+The branche hg-pages is created by the command `npm run deploy` (executing the gh-pages tool).
 
 ![image](https://user-images.githubusercontent.com/50048285/81414659-9c58eb00-9147-11ea-83d6-96cea9986613.png)
 
