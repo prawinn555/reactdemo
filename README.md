@@ -71,8 +71,10 @@ npm run deploy
  
 ```
 
-Configure Github page, see https://pages.github.com/
-Choose "project page"
+Configure Github page, see https://pages.github.com/.
+
+Choose the "project page" tab.
+
 (There are 2 kinds of configuration : "Organisation page" is the global page  https://[username].github.io. 
 "Project page" is the project spécifique page  https://[username].github.io/[projectname]).
 
