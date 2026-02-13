@@ -5,7 +5,7 @@
   "homepage": "http://prawinn555.github.io/reactdemo",
   "devDependencies": {
     "prettier": "^1.13.0",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "^5.0.1",
     "gh-pages": "^2.2.0"
   },
   "dependencies": {
